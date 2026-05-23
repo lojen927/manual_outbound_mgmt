@@ -23,6 +23,7 @@ urlpatterns = [
     path('users/create/', views.UserCreateView.as_view(), name='user_create'),
     path('users/<int:pk>/password/', views.UserPasswordResetView.as_view(), name='user_password_reset'),
     path('users/<int:pk>/toggle-active/', views.UserToggleActiveView.as_view(), name='user_toggle_active'),
+    path('users/<int:pk>/delete/', views.UserDeleteView.as_view(), name='user_delete'),
 
     # Reason management
     path('reasons/', views.ReasonListView.as_view(), name='reason_list'),

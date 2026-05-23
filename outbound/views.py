@@ -559,6 +559,27 @@ class UserToggleActiveView(SuperuserRequiredMixin, LoginRequiredMixin, View):
         return redirect('user_list')
 
 
+class UserDeleteView(SuperuserRequiredMixin, LoginRequiredMixin, View):
+    template_name = 'outbound/user_delete_confirm.html'
+
+    def get(self, request, pk):
+        if pk == request.user.pk:
+            messages.warning(request, gettext('不能删除自己。'))
+            return redirect('user_list')
+        user = get_object_or_404(User, pk=pk)
+        return render(request, self.template_name, {'target_user': user})
+
+    def post(self, request, pk):
+        if pk == request.user.pk:
+            messages.warning(request, gettext('不能删除自己。'))
+            return redirect('user_list')
+        user = get_object_or_404(User, pk=pk)
+        username = user.username
+        user.delete()
+        messages.success(request, gettext('用户 %(username)s 已删除。') % {'username': username})
+        return redirect('user_list')
+
+
 # ---- Reason Management Views ----
 
 class ReasonListView(SuperuserRequiredMixin, LoginRequiredMixin, ListView):

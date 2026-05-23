@@ -22,7 +22,7 @@
                         <th>{% trans "超级用户" %}</th>
                         <th>{% trans "活跃状态" %}</th>
                         <th>{% trans "最后登录" %}</th>
-                        <th style="width:180px">{% trans "操作" %}</th>
+                        <th style="width:260px">{% trans "操作" %}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,6 +50,11 @@
                             <a href="{% url 'user_password_reset' u.pk %}" class="btn btn-sm btn-outline-warning" title="{% trans '重置密码' %}">
                                 <i class="bi bi-key"></i> {% trans "重置密码" %}
                             </a>
+                            {% if u.pk != request.user.pk %}
+                            <a href="{% url 'user_delete' u.pk %}" class="btn btn-sm btn-outline-danger" title="{% trans '删除用户' %}">
+                                <i class="bi bi-trash"></i> {% trans "删除" %}
+                            </a>
+                            {% endif %}
                             {% if u.is_active and u.pk != request.user.pk %}
                             <a href="{% url 'user_toggle_active' u.pk %}" class="btn btn-sm btn-outline-danger" title="{% trans '禁用用户' %}" onclick="return confirm('{% trans "确定要禁用用户" %} {{ u.username }} {% trans "吗？" %}')">
                                 <i class="bi bi-person-x"></i> {% trans "禁用" %}
