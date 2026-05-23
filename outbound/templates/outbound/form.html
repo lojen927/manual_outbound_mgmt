@@ -1,0 +1,469 @@
+{% extends 'outbound/base.html' %}
+{% load i18n %}
+{% block title %}{{ title }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<!-- form.html v2 -->
+<style>
+#item-table td { padding: 0.05rem 0.25rem !important; vertical-align: middle; }
+#item-table .form-control-sm { padding-top: 0.05rem; padding-bottom: 0.05rem; min-height: 0; height: 26px; line-height: 1.2; font-size: 0.8rem; }
+#item-table input[name$="-DELETE"] { display: none; }
+#item-table .btn-sm { padding: 0.05rem 0.25rem; line-height: 1; font-size: 0.75rem; }
+</style>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0"><i class="bi {% if object %}bi-pencil-square{% else %}bi-plus-circle{% endif %}"></i> {{ title }}</h4>
+    <a href="{% url 'outbound_list' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> {% trans "返回列表" %}
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        {% if object %}
+        <div class="alert alert-info mb-3">
+            <i class="bi bi-info-circle"></i> {% trans "出库单号：" %} <strong>{{ object.order_no }}</strong>
+            {% if object.items.exists and object.items.all.0.status == 'closed' %}
+            <span class="ms-2 text-warning">{% trans "注意：已有明细项关闭，修改可能影响已关闭的记录。" %}</span>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <form method="post" id="orderForm" autocomplete="off">
+            {% csrf_token %}
+            {{ item_formset.management_form }}
+
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+            {% endif %}
+            {% if item_formset.non_form_errors %}
+            <div class="alert alert-danger">{{ item_formset.non_form_errors }}</div>
+            {% endif %}
+
+            <h5 class="card-title mb-2" style="font-size:0.95rem;">{% trans "表头信息" %}</h5>
+            <div class="row g-2">
+                <div class="col-md-4">
+                    <label class="form-label small mb-1">{{ form.department.label }} <span class="text-danger">*</span></label>
+                    {{ form.department }}
+                    {% if form.department.errors %}<div class="text-danger small">{{ form.department.errors }}</div>{% endif %}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small mb-1">{{ form.applicant.label }} <span class="text-danger">*</span></label>
+                    {{ form.applicant }}
+                    {% if form.applicant.errors %}<div class="text-danger small">{{ form.applicant.errors }}</div>{% endif %}
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small mb-1">{{ form.employee_id.label }} <span class="text-danger">*</span></label>
+                    {{ form.employee_id }}
+                    {% if form.employee_id.errors %}<div class="text-danger small">{{ form.employee_id.errors }}</div>{% endif %}
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small mb-1">{{ form.phone.label }}</label>
+                    {{ form.phone }}
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small mb-1">{{ form.reason.label }} <span class="text-danger">*</span></label>
+                    {{ form.reason }}
+                    {% if form.reason.errors %}<div class="text-danger small">{{ form.reason.errors }}</div>{% endif %}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small mb-1">{{ form.remark.label }} <span class="text-danger">*</span></label>
+                    {{ form.remark }}
+                    {% if form.remark.errors %}<div class="text-danger small">{{ form.remark.errors }}</div>{% endif %}
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small mb-1">{{ form.needs_system_posting.label }}</label>
+                    <div class="d-flex gap-2" style="margin-top:2px;">
+                        {% for radio in form.needs_system_posting %}
+                        <div class="form-check form-check-inline mb-0">
+                            {{ radio.tag }}
+                            <label class="form-check-label small" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small mb-1">{{ form.pending_order_numbers.label }}</label>
+                    {{ form.pending_order_numbers }}
+                    {% if form.pending_order_numbers.errors %}<div class="text-danger small">{{ form.pending_order_numbers.errors }}</div>{% endif %}
+                </div>
+            </div>
+
+            <hr>
+            <h5 class="mb-3">{% trans "出库明细" %}</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm mb-0" id="item-table" style="font-size:0.875rem;">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="min-width:120px">{% trans "物料编码" %} <span class="text-danger">*</span></th>
+                            <th style="min-width:280px">{% trans "物料描述" %} <span class="text-danger">*</span></th>
+                            <th style="min-width:120px">{% trans "规格" %}</th>
+                            <th style="min-width:80px">{% trans "数量" %} <span class="text-danger">*</span></th>
+                            <th style="min-width:70px">{% trans "单位" %} <span class="text-danger">*</span></th>
+                            <th style="min-width:120px">{% trans "存货库位" %} <span class="text-danger">*</span></th>
+                            <th style="min-width:140px">{% trans "备注" %}</th>
+                            <th style="width:90px">{% trans "操作" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for f in item_formset %}
+                        <tr class="item-row">
+                            <td>
+                                {{ f.id }}
+                                {{ f.material_code }}
+                                {% if f.material_code.errors %}<div class="text-danger small">{{ f.material_code.errors }}</div>{% endif %}
+                            </td>
+                            <td>
+                                {{ f.material_name }}
+                                {% if f.material_name.errors %}<div class="text-danger small">{{ f.material_name.errors }}</div>{% endif %}
+                            </td>
+                            <td>{{ f.specification }}</td>
+                            <td>
+                                {{ f.quantity }}
+                                {% if f.quantity.errors %}<div class="text-danger small">{{ f.quantity.errors }}</div>{% endif %}
+                            </td>
+                            <td>
+                                {{ f.unit }}
+                                {% if f.unit.errors %}<div class="text-danger small">{{ f.unit.errors }}</div>{% endif %}
+                            </td>
+                            <td>{{ f.storage_location }}</td>
+                            <td>{{ f.remark }}</td>
+                            <td class="text-center align-middle" style="white-space:nowrap;">
+                                {% if f.instance.pk %}
+                                    {{ f.DELETE }}
+                                    <button type="button" class="btn btn-sm btn-outline-danger delete-existing-row" title="{% trans '删除此行' %}">
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                {% else %}
+                                    <button type="button" class="btn btn-sm btn-outline-danger remove-row" title="{% trans '删除此行' %}">
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-secondary" id="add-row">
+                <i class="bi bi-plus-lg"></i> {% trans "添加一行" %}
+            </button>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg"></i> {% trans "保存出库单草稿" %}</button>
+                <a href="{% if object %}{% url 'outbound_detail' object.pk %}{% else %}{% url 'outbound_list' %}{% endif %}" class="btn btn-outline-secondary">{% trans "取消" %}</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+/* Clear form when loaded from browser bfcache (back/forward cache) */
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        window.location.reload();
+    }
+});
+document.addEventListener('DOMContentLoaded', function() {
+    // Reason → needs_system_posting toggle
+    var reasonSelect = document.getElementById('id_reason');
+    function updatePosting() {
+        var trueRadio = document.querySelector('input[name="needs_system_posting"][value="true"]');
+        var falseRadio = document.querySelector('input[name="needs_system_posting"][value="false"]');
+        if (reasonSelect.value === 'off_book') {
+            if (falseRadio) falseRadio.checked = true;
+        } else {
+            if (trueRadio) trueRadio.checked = true;
+        }
+    }
+    if (reasonSelect) {
+        reasonSelect.addEventListener('change', updatePosting);
+        document.querySelectorAll('input[name="needs_system_posting"]').forEach(function(rb) {
+            rb.addEventListener('click', function(e) { e.preventDefault(); });
+        });
+        updatePosting();
+    }
+
+    var prefix = '{{ item_formset.prefix }}';
+    var totalForms = document.getElementById('id_' + prefix + '-TOTAL_FORMS');
+    var tbody = document.querySelector('#item-table tbody');
+
+    tbody.addEventListener('click', function(e) {
+        var btn = e.target.closest('.remove-row');
+        if (btn) {
+            var row = btn.closest('.item-row');
+            if (tbody.querySelectorAll('.item-row').length > 1) {
+                row.remove();
+                reindexRows();
+            } else {
+                alert('{% trans "至少需要保留一行明细。" %}');
+            }
+            return;
+        }
+        var delBtn = e.target.closest('.delete-existing-row');
+        if (delBtn) {
+            var row = delBtn.closest('.item-row');
+            if (tbody.querySelectorAll('.item-row:not(.d-none)').length <= 1) {
+                alert('{% trans "至少需要保留一行明细。" %}');
+                return;
+            }
+            if (confirm('{% trans "确定要删除此行吗？" %}')) {
+                var delCheckbox = row.querySelector('input[name$="-DELETE"]');
+                if (delCheckbox) delCheckbox.checked = true;
+                row.classList.add('d-none');
+            }
+        }
+    });
+
+    document.getElementById('add-row').addEventListener('click', function() {
+        var count = parseInt(totalForms.value);
+        var rows = tbody.querySelectorAll('.item-row');
+        if (rows.length === 0) return;
+        var sourceRow = rows[0];
+        var newRow = sourceRow.cloneNode(true);
+
+        newRow.querySelectorAll('input, select, textarea').forEach(function(el) {
+            var name = el.name.replace(/-\d+-/, '-' + count + '-');
+            el.name = name;
+            el.id = 'id_' + name;
+            if (el.type !== 'hidden' && !el.name.endsWith('-DELETE')) {
+                el.value = '';
+            }
+            if (el.name.endsWith('-DELETE')) el.checked = false;
+            el.classList.remove('is-valid', 'is-invalid');
+            if (el._lookupTimer) { clearTimeout(el._lookupTimer); el._lookupTimer = null; }
+        });
+
+        newRow.querySelectorAll('.text-danger').forEach(function(el) { el.remove(); });
+        var hiddenId = newRow.querySelector('input[name$="-id"]');
+        if (hiddenId) hiddenId.value = '';
+
+        tbody.appendChild(newRow);
+        totalForms.value = count + 1;
+    });
+
+    // Material code AJAX auto-fill
+    var MATERIAL_LOOKUP_URL = '{% url "material_lookup" %}';
+    tbody.addEventListener('input', function(e) {
+        var input = e.target;
+        if (!input.name || !input.name.endsWith('-material_code')) return;
+
+        if (input._lookupTimer) clearTimeout(input._lookupTimer);
+
+        var code = input.value.trim();
+        var row = input.closest('.item-row');
+        var nameField = row.querySelector('input[name$="-material_name"]');
+        var specField = row.querySelector('input[name$="-specification"]');
+        var unitField = row.querySelector('input[name$="-unit"]');
+
+        if (!code) {
+            nameField.value = '';
+            if (specField) specField.value = '';
+            if (unitField) unitField.value = '';
+            input.classList.remove('is-valid', 'is-invalid');
+            return;
+        }
+
+        input._lookupTimer = setTimeout(function() {
+            fetch(MATERIAL_LOOKUP_URL + '?q=' + encodeURIComponent(code))
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    if (data.found) {
+                        nameField.value = data.material_name;
+                        if (specField) specField.value = data.specification || '';
+                        if (unitField) unitField.value = data.unit || '';
+                        input.classList.remove('is-invalid');
+                        input.classList.add('is-valid');
+                    } else {
+                        nameField.value = '';
+                        if (specField) specField.value = '';
+                        if (unitField) unitField.value = '';
+                        input.classList.remove('is-valid');
+                        input.classList.add('is-invalid');
+                    }
+                })
+                .catch(function() {
+                    input.classList.remove('is-valid');
+                    input.classList.add('is-invalid');
+                });
+        }, 300);
+    });
+
+    function reindexRows() {
+        var rows = tbody.querySelectorAll('.item-row');
+        rows.forEach(function(row, idx) {
+            row.querySelectorAll('input, select, textarea').forEach(function(el) {
+                var name = el.name.replace(/-\d+-/, '-' + idx + '-');
+                el.name = name;
+                el.id = 'id_' + name;
+            });
+        });
+        totalForms.value = rows.length;
+    }
+
+    // === Form draft auto-save (sessionStorage) ===
+    // Only enable on create form (no object.pk)
+    {% if not object %}
+    var DRAFT_KEY = 'outbound_form_draft';
+    var draftTimer = null;
+    var form = document.getElementById('orderForm');
+
+    function collectDraft() {
+        var data = {};
+        form.querySelectorAll('[name]').forEach(function(el) {
+            if (el.type === 'checkbox') {
+                data[el.name] = el.checked ? '1' : '';
+            } else if (el.type === 'radio') {
+                if (el.checked) data[el.name] = el.value;
+            } else if (el.type !== 'file') {
+                data[el.name] = el.value;
+            }
+        });
+        return data;
+    }
+
+    function restoreDraft(data) {
+        // Determine max index from saved data
+        var maxIdx = -1;
+        for (var name in data) {
+            var m = name.match(new RegExp(prefix + '-(\\d+)-'));
+            if (m) { var idx = parseInt(m[1]); if (idx > maxIdx) maxIdx = idx; }
+        }
+        // Add rows to match the saved count
+        var neededRows = maxIdx + 1; // total rows needed
+        while (parseInt(totalForms.value) < neededRows) {
+            document.getElementById('add-row').click();
+        }
+        // Fill all field values
+        for (var name in data) {
+            var el = form.querySelector('[name="' + name + '"]');
+            if (el) {
+                if (el.type === 'checkbox') {
+                    el.checked = data[name] === '1';
+                } else if (el.type === 'radio') {
+                    var radio = form.querySelector('[name="' + name + '"][value="' + data[name] + '"]');
+                    if (radio) radio.checked = true;
+                } else {
+                    el.value = data[name];
+                }
+            }
+        }
+        // Sync reason → needs_system_posting
+        if (reasonSelect) updatePosting();
+    }
+
+    // Silently restore draft if exists
+    try {
+        var savedRaw = sessionStorage.getItem(DRAFT_KEY);
+        if (savedRaw) {
+            var saved = JSON.parse(savedRaw);
+            var meaningful = Object.keys(saved).some(function(k) {
+                var v = saved[k];
+                if (typeof v !== 'string' || v.trim().length === 0) return false;
+                return !k.match(/(TOTAL|INITIAL|MIN|MAX)(_NUM)?_FORMS|csrfmiddlewaretoken|^reason$|^needs_system_posting$/);
+            });
+            if (meaningful) {
+                restoreDraft(saved);
+            }
+        }
+    } catch(e) {}
+
+    // Auto-save on any input change
+    console.log('[draft] form.html v2 loaded');
+    window.__hasMeaningfulData = function() { return hasMeaningfulData(); };
+    function hasMeaningfulData() {
+        var names = Object.create(null);
+        form.querySelectorAll('[name]').forEach(function(el) { names[el.name] = el.value; });
+        return Object.keys(names).some(function(k) {
+            var v = names[k];
+            if (typeof v !== 'string' || v.trim().length === 0) return false;
+            return !k.match(/(TOTAL|INITIAL|MIN|MAX)(_NUM)?_FORMS|csrfmiddlewaretoken|^reason$|^needs_system_posting$/);
+        });
+    }
+    function saveDraft() {
+        if (!hasMeaningfulData()) { sessionStorage.removeItem(DRAFT_KEY); return; }
+        try { sessionStorage.setItem(DRAFT_KEY, JSON.stringify(collectDraft())); } catch(e) {}
+    }
+    form.addEventListener('input', function() {
+        clearTimeout(draftTimer);
+        draftTimer = setTimeout(saveDraft, 500);
+    });
+    form.addEventListener('change', function() {
+        clearTimeout(draftTimer);
+        draftTimer = setTimeout(saveDraft, 500);
+    });
+
+    // Intercept sidebar link clicks → prompt to save draft
+    var _draftDiscarded = false;
+    document.querySelectorAll('.sidebar .nav-link').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            if (link.classList.contains('active')) return;
+
+            // Check if any field has substantive content
+            if (!hasMeaningfulData()) return;
+
+            e.preventDefault();
+            var href = link.getAttribute('href');
+            if (confirm('{% trans "是否保存当前草稿？" %}')) {
+                saveDraft();
+            } else {
+                _draftDiscarded = true;
+                sessionStorage.removeItem(DRAFT_KEY);
+            }
+            window.location.href = href;
+        });
+    });
+
+    // beforeunload: auto-save as safety net (unless submitting or discarded)
+    window.addEventListener('beforeunload', function() {
+        if (!_draftDiscarded && !_isSubmitting) saveDraft();
+    });
+
+    // Clear draft on successful submit (flag prevents beforeunload from re-saving)
+    var _isSubmitting = false;
+    form.addEventListener('submit', function() {
+        _isSubmitting = true;
+        sessionStorage.removeItem(DRAFT_KEY);
+    });
+    {% endif %}
+
+    // Paste multi-line material codes: split across rows
+    tbody.addEventListener('paste', function(e) {
+        var input = e.target;
+        if (!input.name || !input.name.endsWith('-material_code')) return;
+
+        var text = (e.clipboardData || window.clipboardData).getData('text');
+        if (!text) return;
+
+        var codes = text.split(/\n/).map(function(s) { return s.trim(); }).filter(function(s) { return s.length > 0; });
+        if (codes.length <= 1) return;
+
+        e.preventDefault();
+
+        var allRows = Array.from(tbody.querySelectorAll('.item-row'));
+        var currentRow = input.closest('.item-row');
+        var startIdx = allRows.indexOf(currentRow);
+
+        codes.forEach(function(code, i) {
+            var targetIdx = startIdx + i;
+            var targetRow;
+
+            if (targetIdx < allRows.length) {
+                targetRow = allRows[targetIdx];
+            } else {
+                document.getElementById('add-row').click();
+                allRows = Array.from(tbody.querySelectorAll('.item-row'));
+                targetRow = allRows[targetIdx];
+            }
+
+            var ci = targetRow.querySelector('input[name$="-material_code"]');
+            if (ci) {
+                ci.value = code;
+                ci.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

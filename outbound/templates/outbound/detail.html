@@ -1,0 +1,277 @@
+{% extends 'outbound/base.html' %}
+{% load i18n %}
+{% block title %}{% trans "出库单详情" %} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0"><i class="bi bi-file-text"></i> {% trans "出库单详情" %}</h4>
+    <div>
+        {% if object.status == 'draft' %}
+        <form method="post" action="{% url 'outbound_submit' object.pk %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success" onclick="return confirm('{% trans "确定要提交此出库单吗？提交后仅管理员可编辑。" %}')">
+                <i class="bi bi-send"></i> {% trans "提交出库单" %}
+            </button>
+        </form>
+        {% endif %}
+        {% if object.can_void %}
+        <a href="{% url 'outbound_void' object.pk %}" class="btn btn-outline-danger" title="{% trans '作废此出库单（提交后2小时内有效）' %}">
+            <i class="bi bi-x-octagon"></i> {% trans "作废" %}
+        </a>
+        {% endif %}
+        {% if object.status == 'draft' or user.is_superuser %}
+        <a href="{% url 'outbound_update' object.pk %}" class="btn btn-outline-primary" title="{% trans '编辑出库单' %}">
+            <i class="bi bi-pencil"></i> {% trans "编辑" %}
+        </a>
+        {% endif %}
+        {% if object.status != 'voided' and not object.status == 'completed' or user.is_superuser %}
+        <a href="{% url 'outbound_print' object.pk %}" class="btn btn-outline-info" title="{% trans '打印出库单' %}">
+            <i class="bi bi-printer"></i> {% trans "打印" %}
+        </a>
+        {% endif %}
+        {% if object.status == 'draft' or user.is_superuser %}
+        <form method="post" action="{% url 'outbound_delete' object.pk %}" style="display:inline;" onsubmit="return confirm('{% trans "确定要删除出库单" %}「{{ object.order_no }}」{% trans "吗？此操作不可恢复。" %}');">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger">
+                <i class="bi bi-trash"></i> {% trans "删除" %}
+            </button>
+        </form>
+        {% endif %}
+        <a href="{% url 'outbound_list' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> {% trans "返回列表" %}
+        </a>
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">{% trans "基本信息" %}</h5>
+        <span>
+            {% if object.status == 'draft' %}
+                <span class="badge bg-warning text-dark fs-6">{% trans "草稿" %}</span>
+            {% elif object.status == 'completed' %}
+                <span class="badge bg-success fs-6">{% trans "已完成" %}</span>
+            {% elif object.status == 'voided' %}
+                <span class="badge bg-secondary fs-6">{% trans "已作废" %}</span>
+            {% else %}
+                <span class="badge bg-primary fs-6">{% trans "已提交" %}</span>
+            {% endif %}
+        </span>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3 mb-2">
+                <small class="text-muted d-block">{% trans "出库单号" %}</small>
+                <strong>{{ object.order_no }}</strong>
+            </div>
+            <div class="col-md-3 mb-2">
+                <small class="text-muted d-block">{% trans "领料部门" %}</small>
+                <strong>{{ object.department }}</strong>
+            </div>
+            <div class="col-md-2 mb-2">
+                <small class="text-muted d-block">{% trans "领料人" %}</small>
+                <strong>{{ object.applicant }}</strong>
+            </div>
+            <div class="col-md-2 mb-2">
+                <small class="text-muted d-block">{% trans "工号" %}</small>
+                <strong>{{ object.employee_id }}</strong>
+            </div>
+            <div class="col-md-2 mb-2">
+                <small class="text-muted d-block">{% trans "联系电话" %}</small>
+                <strong>{{ object.phone|default:"-" }}</strong>
+            </div>
+            <div class="col-md-3 mb-2">
+                <small class="text-muted d-block">{% trans "创建时间" %}</small>
+                <strong>{{ object.created_at|date:"Y-m-d H:i" }}</strong>
+            </div>
+            <div class="col-md-3 mb-2">
+                <small class="text-muted d-block">{% trans "创建人" %}</small>
+                <strong>{{ object.created_by.username }}</strong>
+            </div>
+            <div class="col-md-3 mb-2">
+                <small class="text-muted d-block">{% trans "是否需要系统补过账" %}</small>
+                <strong>
+                    {% if object.status == 'completed' %}
+                        <span class="badge bg-success fs-6">{% trans "已完成" %}</span>
+                    {% elif object.needs_system_posting %}
+                        <span class="badge bg-warning text-dark fs-6">{% trans "需要" %}</span>
+                    {% else %}
+                        <span class="badge bg-secondary fs-6">{% trans "不需要" %}</span>
+                    {% endif %}
+                </strong>
+            </div>
+        </div>
+        {% if object.reason %}
+        <div class="row mt-2">
+            <div class="col-12">
+                <small class="text-muted d-block">{% trans "手工领料的原因" %}</small>
+                <p class="mb-0"><strong>{{ object.reason_label }}</strong></p>
+            </div>
+        </div>
+        {% endif %}
+        {% if object.remark %}
+        <div class="row mt-2">
+            <div class="col-12">
+                <small class="text-muted d-block">{% trans "备注说明" %}</small>
+                <p class="mb-0">{{ object.remark|linebreaksbr }}</p>
+            </div>
+        </div>
+        {% endif %}
+        {% if object.pending_order_numbers %}
+        <div class="row mt-2">
+            <div class="col-12">
+                <small class="text-muted d-block">{% trans "未完成审批的系统领料申请单号" %}</small>
+                <p class="mb-0">{{ object.pending_order_numbers|linebreaksbr }}</p>
+            </div>
+        </div>
+        {% endif %}
+        {% if object.status == 'voided' %}
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="alert alert-danger mb-0 py-2">
+                    <small class="text-muted d-block">{% trans "作废信息" %}</small>
+                    <strong>{{ object.voided_by.username }}</strong>
+                    {% blocktrans with vt=object.voided_at|date:"Y-m-d H:i" vr=object.void_reason %}在 <strong>{{ vt }}</strong> 作废此单，原因是：<strong>{{ vr }}</strong>{% endblocktrans %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">{% trans "出库明细" %}</h5>
+        <span class="text-muted small">{% trans "共" %} {{ object.items.count }} {% trans "项" %}</span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width:40px">#</th>
+                        <th>{% trans "物料编码" %}</th>
+                        <th>{% trans "物料描述" %}</th>
+                        <th>{% trans "规格" %}</th>
+                        <th style="width:80px">{% trans "数量" %}</th>
+                        <th style="width:60px">{% trans "单位" %}</th>
+                        <th>{% trans "存货库位" %}</th>
+                        <th>{% trans "备注" %}</th>
+                        <th style="width:80px">{% trans "状态" %}</th>
+                        <th>{% trans "补录单号" %}</th>
+                        <th style="width:100px">{% trans "操作" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in object.items.all %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ item.material_code }}</td>
+                        <td>{{ item.material_name }}</td>
+                        <td>{{ item.specification|default:"-" }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.unit }}</td>
+                        <td>{{ item.storage_location|default:"-" }}</td>
+                        <td>{{ item.remark|default:"-" }}</td>
+                        <td>
+                            {% if item.status == 'closed' %}
+                                <span class="badge bg-success">{% trans "已关闭" %}</span>
+                                {% if item.system_order_no %}<br><small class="text-muted">{{ item.system_order_no }}</small>{% endif %}
+                                {% if item.close_reason %}<br><small class="text-muted" title="{{ item.close_reason }}">{{ item.close_reason|truncatechars:10 }}</small>{% endif %}
+                            {% else %}
+                                <span class="badge bg-primary">{% trans "未关闭" %}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ item.system_order_no|default:"-" }}</td>
+                        <td>
+                            {% if item.status == 'open' and object.status != 'draft' %}
+                            <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#closeModal{{ item.pk }}">
+                                <i class="bi bi-check-circle"></i> {% trans "关闭" %}
+                            </button>
+                            {% elif item.status == 'open' and object.status == 'draft' %}
+                            <span class="text-muted small">—</span>
+                            {% else %}
+                                {% if item.closed_at %}
+                                <small class="text-muted">
+                                    {{ item.closed_at|date:"m-d H:i" }}<br>
+                                    {{ item.closed_by.username|default:"" }}
+                                </small>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="11" class="text-center text-muted py-4">{% trans "无明细记录" %}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Close Modals -->
+{% if object.status == 'submitted' %}
+{% for item in object.items.all %}
+{% if item.status == 'open' %}
+<div class="modal fade" id="closeModal{{ item.pk }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="{% url 'outbound_close_item' object.pk item.pk %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">{% trans "关闭明细项" %}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>{{ item.material_code }}</strong> - {{ item.material_name }} ({% trans "数量:" %} {{ item.quantity }})</p>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "关闭方式" %}</label>
+                        <select name="close_mode" class="form-select close-mode-select" data-item="{{ item.pk }}">
+                            <option value="system">{% trans "补录系统出库单号" %}</option>
+                            <option value="manual">{% trans "手动关闭（无需补过账）" %}</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 system-field" id="system-field-{{ item.pk }}">
+                        <label class="form-label">{% trans "系统出库单号" %} <span class="text-danger">*</span></label>
+                        <input type="text" name="system_order_no" class="form-control" placeholder="{% trans '输入系统出库单号' %}">
+                    </div>
+                    <div class="mb-3 manual-field" id="manual-field-{{ item.pk }}" style="display:none;">
+                        <label class="form-label">{% trans "关闭原因" %} <span class="text-danger">*</span></label>
+                        <textarea name="close_reason" class="form-control" rows="2" placeholder="{% trans '手动关闭时，请填写关闭原因' %}"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "取消" %}</button>
+                    <button type="submit" class="btn btn-success"><i class="bi bi-check-lg"></i> {% trans "确认关闭" %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.close-mode-select').forEach(function(select) {
+        select.addEventListener('change', function() {
+            var itemPk = this.dataset.item;
+            var systemField = document.getElementById('system-field-' + itemPk);
+            var manualField = document.getElementById('manual-field-' + itemPk);
+            if (this.value === 'manual') {
+                systemField.style.display = 'none';
+                manualField.style.display = 'block';
+            } else {
+                systemField.style.display = 'block';
+                manualField.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

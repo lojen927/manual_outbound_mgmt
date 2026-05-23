@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+{% load static %}
+{% load i18n %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% trans "手工出库系统" %}{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        html, body { height: 100%; margin: 0; background: #f0f2f5; }
+        .wrapper { display: flex; height: 100%; }
+        .sidebar {
+            width: 220px; min-width: 220px; background: #1a1d23;
+            display: flex; flex-direction: column; color: #ccc;
+        }
+        .sidebar .brand {
+            padding: 16px 18px; font-size: 16px; font-weight: 600;
+            color: #fff; border-bottom: 1px solid #2a2d33;
+            white-space: nowrap;
+        }
+        .sidebar .brand i { margin-right: 8px; }
+        .sidebar .nav { flex: 1; padding: 8px 0; }
+        .sidebar .nav-item { padding: 0; }
+        .sidebar .nav-link {
+            padding: 10px 20px; color: #b0b3b8; display: flex;
+            align-items: center; gap: 10px; font-size: 14px;
+            border-left: 3px solid transparent; transition: .15s;
+        }
+        .sidebar .nav-link:hover { background: #2a2d33; color: #fff; }
+        .sidebar .nav-link.active {
+            background: #2a2d33; color: #fff; border-left-color: #0d6efd;
+        }
+        .sidebar .nav-link i { font-size: 16px; width: 20px; text-align: center; }
+        .sidebar .user-area {
+            padding: 12px 18px; border-top: 1px solid #2a2d33;
+            font-size: 13px;
+        }
+        .sidebar .user-area .username { color: #e0e0e0; margin-bottom: 4px; }
+        .sidebar .user-area a { color: #b0b3b8; text-decoration: none; }
+        .sidebar .user-area a:hover { color: #fff; }
+        .main-content { flex: 1; overflow-y: auto; padding: 20px 24px; min-width: 0; }
+        .card { box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+        .table th { white-space: nowrap; }
+        .toast-container { position: fixed; top: 60px; right: 20px; z-index: 9999; }
+        @media print {
+            .sidebar { display: none !important; }
+            .main-content { margin-left: 0 !important; padding: 10px !important; }
+            .no-print { display: none !important; }
+            .card { box-shadow: none !important; border: 1px solid #ddd; }
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="brand">
+                <i class="bi bi-truck"></i> {% trans "手工出库系统" %}
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link{% if request.resolver_match.url_name == 'outbound_list' %} active{% endif %}" href="{% url 'outbound_list' %}">
+                        <i class="bi bi-list-ul"></i> {% trans "出库单列表" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link{% if request.resolver_match.url_name == 'outbound_create' %} active{% endif %}" href="{% url 'outbound_create' %}">
+                        <i class="bi bi-plus-circle"></i> {% trans "新增出库单" %}
+                    </a>
+                </li>
+                {% if user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link{% if 'user' in request.resolver_match.url_name %} active{% endif %}" href="{% url 'user_list' %}">
+                        <i class="bi bi-people"></i> {% trans "用户管理" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link{% if 'reason' in request.resolver_match.url_name %} active{% endif %}" href="{% url 'reason_list' %}">
+                        <i class="bi bi-tags"></i> {% trans "领料原因管理" %}
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+            <div class="user-area">
+                {% if user.is_authenticated %}
+                <div class="username"><i class="bi bi-person-circle"></i> {{ user.username }}</div>
+                <!-- Language switch -->
+                <div style="margin-bottom:6px;">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    <form action="{% url 'set_language' %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <select name="language" onchange="this.form.submit()" class="form-select form-select-sm" style="font-size:12px;padding:2px 4px;height:auto;">
+                            <option value="zh-hans" {% if LANGUAGE_CODE == 'zh-hans' %}selected{% endif %}>中文</option>
+                            <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+                        </select>
+                    </form>
+                </div>
+                <form method="post" action="{% url 'admin:logout' %}" style="display:inline">
+                    {% csrf_token %}
+                    <a href="#" onclick="this.closest('form').submit(); return false;"><i class="bi bi-box-arrow-right"></i> {% trans "退出登录" %}</a>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        <!-- Main content -->
+        <div class="main-content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <!-- Toast messages -->
+    <div class="toast-container">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="toast align-items-center text-bg-{{ message.tags|default:'info' }} border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+            <div class="d-flex">
+                <div class="toast-body">{{ message }}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var toasts = document.querySelectorAll('.toast');
+        toasts.forEach(function(el) {
+            var toast = new bootstrap.Toast(el);
+            toast.show();
+        });
+    });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

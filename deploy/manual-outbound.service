@@ -1,0 +1,21 @@
+[Unit]
+Description=Manual Outbound Management Gunicorn Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/manual-outbound
+Environment=PATH=/opt/manual-outbound/.venv/bin
+EnvironmentFile=/opt/manual-outbound/.env
+ExecStart=/opt/manual-outbound/.venv/bin/gunicorn manual_outbound_mgmt.wsgi:application \
+    --bind 127.0.0.1:8000 \
+    --workers 2 \
+    --timeout 120 \
+    --access-logfile /opt/manual-outbound/logs/gunicorn_access.log \
+    --error-logfile /opt/manual-outbound/logs/gunicorn_error.log
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

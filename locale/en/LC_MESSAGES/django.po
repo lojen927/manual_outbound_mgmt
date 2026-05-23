@@ -1,0 +1,1260 @@
+# Translations for manual_outbound_mgmt
+# Copyright (C) 2026
+# This file is distributed under the same license as the manual_outbound_mgmt project.
+# Automatically generated, manually translated.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: manual_outbound_mgmt 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: models.py
+msgid "用户"
+msgstr "User"
+
+#: models.py
+msgid "首次登录需修改密码"
+msgstr "Must change password on first login"
+
+#: models.py
+msgid "用户配置"
+msgstr "User Profile"
+
+#: models.py
+msgid "配置"
+msgstr " Profile"
+
+#: models.py
+msgid "编码"
+msgstr "Code"
+
+#: models.py
+msgid "名称"
+msgstr "Name"
+
+#: models.py
+msgid "排序"
+msgstr "Sort Order"
+
+#: models.py
+msgid "启用"
+msgstr "Active"
+
+#: models.py
+msgid "领料原因"
+msgstr "Pick Reason"
+
+#: models.py
+msgid "领料原因管理"
+msgstr "Reason Management"
+
+#: models.py
+msgid "物料编码"
+msgstr "Material Code"
+
+#: models.py
+msgid "物料描述"
+msgstr "Material Name"
+
+#: models.py
+msgid "规格"
+msgstr "Specification"
+
+#: models.py
+msgid "单位"
+msgstr "Unit"
+
+#: models.py
+msgid "物料"
+msgstr "Material"
+
+#: templates/list.html
+msgid "全部（单据状态）"
+msgstr "All (Status)"
+
+#: models.py, forms.py, views.py, list.html, detail.html, print.html
+msgid "草稿"
+msgstr "Draft"
+
+#: models.py, list.html, detail.html, print.html
+msgid "已提交"
+msgstr "Submitted"
+
+#: models.py, list.html, detail.html, print.html
+msgid "已完成"
+msgstr "Completed"
+
+#: models.py, list.html, detail.html
+msgid "已作废"
+msgstr "Voided"
+
+#: models.py
+msgid "出库单号"
+msgstr "Order No."
+
+#: models.py
+msgid "单据状态"
+msgstr "Status"
+
+#: models.py
+msgid "领料部门"
+msgstr "Department"
+
+#: models.py
+msgid "领料人"
+msgstr "Applicant"
+
+#: models.py
+msgid "工号"
+msgstr "Employee ID"
+
+#: models.py
+msgid "联系电话"
+msgstr "Phone"
+
+#: models.py
+msgid "手工领料的原因"
+msgstr "Pick Reason"
+
+#: models.py
+msgid "备注说明"
+msgstr "Remark"
+
+#: models.py
+msgid "是否需要系统补过账"
+msgstr "Needs System Posting"
+
+#: models.py
+msgid "未完成审批的系统领料申请单号"
+msgstr "Pending System Order Nos."
+
+#: models.py
+msgid "如有多个单号，请用换行分隔"
+msgstr "Separate multiple numbers with newlines"
+
+#: models.py
+msgid "创建人"
+msgstr "Created By"
+
+#: models.py
+msgid "创建时间"
+msgstr "Created At"
+
+#: models.py
+msgid "更新时间"
+msgstr "Updated At"
+
+#: models.py
+msgid "作废人"
+msgstr "Voided By"
+
+#: models.py
+msgid "作废时间"
+msgstr "Voided At"
+
+#: models.py
+msgid "作废原因"
+msgstr "Void Reason"
+
+#: models.py
+msgid "手工出库单"
+msgstr "Manual Outbound Order"
+
+#: models.py, detail.html
+msgid "未关闭"
+msgstr "Open"
+
+#: models.py, detail.html
+msgid "已关闭"
+msgstr "Closed"
+
+#: models.py
+msgid "出库明细"
+msgstr "Order Items"
+
+#: models.py
+msgid "数量"
+msgstr "Quantity"
+
+#: models.py
+msgid "存货库位"
+msgstr "Storage Location"
+
+#: models.py
+msgid "备注"
+msgstr "Remark"
+
+#: models.py
+msgid "状态"
+msgstr "Status"
+
+#: models.py
+msgid "补录系统出库单号"
+msgstr "System Order No."
+
+#: models.py
+msgid "关闭原因"
+msgstr "Close Reason"
+
+#: models.py
+msgid "关闭时间"
+msgstr "Closed At"
+
+#: models.py
+msgid "关闭人"
+msgstr "Closed By"
+
+#: models.py
+msgid "出库明细"
+msgstr "Order Items"
+
+#: forms.py
+msgid "备注说明不能为空。"
+msgstr "Remark cannot be empty."
+
+#: forms.py
+msgid "领料部门"
+msgstr "Department"
+
+#: forms.py
+msgid "领料人"
+msgstr "Applicant"
+
+#: forms.py
+msgid "工号"
+msgstr "Employee ID"
+
+#: forms.py
+msgid "联系电话"
+msgstr "Phone"
+
+#: forms.py
+msgid "后续是否需要系统补过账"
+msgstr "Needs system posting?"
+
+#: forms.py
+msgid "未完成审批的系统领料申请单号"
+msgstr "Pending system order nos."
+
+#: forms.py
+msgid "是"
+msgstr "Yes"
+
+#: forms.py
+msgid "否"
+msgstr "No"
+
+#: forms.py
+msgid "是否需要补过账"
+msgstr "Needs posting?"
+
+#: forms.py
+msgid "物料编码"
+msgstr "Material Code"
+
+#: forms.py
+msgid "物料描述"
+msgstr "Material Name"
+
+#: forms.py
+msgid "规格"
+msgstr "Specification"
+
+#: forms.py
+msgid "数量"
+msgstr "Quantity"
+
+#: forms.py
+msgid "单位"
+msgstr "Unit"
+
+#: forms.py
+msgid "存货库位"
+msgstr "Storage Location"
+
+#: forms.py
+msgid "备注"
+msgstr "Remark"
+
+#: forms.py
+msgid "至少需要填写一行出库明细。"
+msgstr "At least one item row is required."
+
+#: forms.py
+msgid "补录系统出库单号"
+msgstr "Record system order no."
+
+#: forms.py
+msgid "手动关闭"
+msgstr "Manual close"
+
+#: forms.py
+msgid "关闭方式"
+msgstr "Close Method"
+
+#: forms.py
+msgid "系统出库单号"
+msgstr "System Order No."
+
+#: forms.py
+msgid "输入系统出库单号"
+msgstr "Enter system order number"
+
+#: forms.py
+msgid "关闭原因"
+msgstr "Close Reason"
+
+#: forms.py
+msgid "手动关闭时必填"
+msgstr "Required for manual close"
+
+#: forms.py
+msgid "补录系统出库单号时，单号不能为空"
+msgstr "Order number is required when recording system order"
+
+#: forms.py
+msgid "手动关闭时，关闭原因不能为空"
+msgstr "Close reason is required for manual close"
+
+#: forms.py
+msgid "编码"
+msgstr "Code"
+
+#: forms.py
+msgid "名称"
+msgstr "Name"
+
+#: forms.py
+msgid "排序"
+msgstr "Sort Order"
+
+#: forms.py
+msgid "启用"
+msgstr "Active"
+
+#: forms.py
+msgid "请填写作废此出库单的原因"
+msgstr "Please enter the reason for voiding this order"
+
+#: views.py
+msgid "新增手工出库单"
+msgstr "New Manual Outbound Order"
+
+#: views.py
+msgid "手工出库单 %(order_no)s 草稿保存成功。"
+msgstr "Manual outbound order %(order_no)s draft saved."
+
+#: views.py
+msgid "编辑出库单 - %(order_no)s"
+msgstr "Edit Order - %(order_no)s"
+
+#: views.py
+msgid "出库单 %(order_no)s 已更新。"
+msgstr "Order %(order_no)s has been updated."
+
+#: views.py
+msgid "已提交的出库单仅限管理员编辑。"
+msgstr "Submitted orders can only be edited by administrators."
+
+#: views.py
+msgid "只有草稿状态的出库单可以提交。"
+msgstr "Only draft orders can be submitted."
+
+#: views.py
+msgid "出库单 %(order_no)s 已提交。"
+msgstr "Order %(order_no)s has been submitted."
+
+#: views.py
+msgid "仅管理员有权限删除非草稿状态的出库单。"
+msgstr "Only administrators can delete non-draft orders."
+
+#: views.py
+msgid "出库单 %(order_no)s 已删除。"
+msgstr "Order %(order_no)s has been deleted."
+
+#: views.py
+msgid "该项已关闭，无需重复操作。"
+msgstr "This item is already closed."
+
+#: views.py
+msgid "明细项 %(code)s 已关闭。"
+msgstr "Item %(code)s has been closed."
+
+#: views.py
+msgid "已作废的出库单不能打印。"
+msgstr "Voided orders cannot be printed."
+
+#: views.py
+msgid "已完成的出库单仅限管理员打印。"
+msgstr "Completed orders can only be printed by administrators."
+
+#: views.py
+msgid "手工出库记录"
+msgstr "Manual Outbound Records"
+
+#: views.py
+msgid "出库单号"
+msgstr "Order No."
+
+#: views.py
+msgid "单据状态"
+msgstr "Status"
+
+#: views.py
+msgid "创建时间"
+msgstr "Created At"
+
+#: views.py
+msgid "领料部门"
+msgstr "Department"
+
+#: views.py
+msgid "领料人"
+msgstr "Applicant"
+
+#: views.py
+msgid "工号"
+msgstr "Employee ID"
+
+#: views.py
+msgid "联系电话"
+msgstr "Phone"
+
+#: views.py
+msgid "手工领料原因"
+msgstr "Pick Reason"
+
+#: views.py
+msgid "备注说明"
+msgstr "Remark"
+
+#: views.py
+msgid "需补过账"
+msgstr "Needs Posting"
+
+#: views.py
+msgid "未审批单号"
+msgstr "Pending Nos."
+
+#: views.py
+msgid "物料编码"
+msgstr "Material Code"
+
+#: views.py
+msgid "物料描述"
+msgstr "Material Name"
+
+#: views.py
+msgid "规格"
+msgstr "Specification"
+
+#: views.py
+msgid "数量"
+msgstr "Quantity"
+
+#: views.py
+msgid "单位"
+msgstr "Unit"
+
+#: views.py
+msgid "存货库位"
+msgstr "Storage Location"
+
+#: views.py
+msgid "明细备注"
+msgstr "Item Remark"
+
+#: views.py
+msgid "明细状态"
+msgstr "Item Status"
+
+#: views.py
+msgid "补录系统出库单号"
+msgstr "System Order No."
+
+#: views.py
+msgid "关闭原因"
+msgstr "Close Reason"
+
+#: views.py
+msgid "关闭时间"
+msgstr "Closed At"
+
+#: views.py
+msgid "关闭人"
+msgstr "Closed By"
+
+#: views.py
+msgid "是"
+msgstr "Yes"
+
+#: views.py
+msgid "否"
+msgstr "No"
+
+#: views.py
+msgid "出库单列表_%(date)s.xlsx"
+msgstr "outbound_list_%(date)s.xlsx"
+
+#: views.py
+msgid "作废出库单"
+msgstr "Void Order"
+
+#: views.py
+msgid "只有已提交状态的出库单可以作废。"
+msgstr "Only submitted orders can be voided."
+
+#: views.py
+msgid "出库单 %(order_no)s 已提交超过2小时，无法作废。"
+msgstr "Order %(order_no)s was submitted over 2 hours ago and cannot be voided."
+
+#: views.py
+msgid "出库单已作废"
+msgstr "Order has been voided"
+
+#: views.py
+msgid "出库单 %(order_no)s 已作废。"
+msgstr "Order %(order_no)s has been voided."
+
+#: views.py
+msgid "仅管理员可访问此页面。"
+msgstr "Only administrators can access this page."
+
+#: views.py
+msgid "密码"
+msgstr "Password"
+
+#: views.py
+msgid "确认密码"
+msgstr "Confirm Password"
+
+#: views.py
+msgid "用户名"
+msgstr "Username"
+
+#: views.py
+msgid "邮箱"
+msgstr "Email"
+
+#: views.py
+msgid "姓名"
+msgstr "Full Name"
+
+#: views.py
+msgid "超级用户"
+msgstr "Superuser"
+
+#: views.py
+msgid "活跃"
+msgstr "Active"
+
+#: views.py
+msgid "两次输入的密码不一致。"
+msgstr "Passwords do not match."
+
+#: views.py
+msgid "新增用户"
+msgstr "New User"
+
+#: views.py
+msgid "用户 %(username)s 创建成功。"
+msgstr "User %(username)s created successfully."
+
+#: views.py
+msgid "新密码"
+msgstr "New Password"
+
+#: views.py
+msgid "确认密码"
+msgstr "Confirm Password"
+
+#: views.py
+msgid "重置密码 - %(username)s"
+msgstr "Reset Password - %(username)s"
+
+#: views.py
+msgid "用户 %(username)s 密码已重置。"
+msgstr "Password for user %(username)s has been reset."
+
+#: views.py
+msgid "不能禁用自己。"
+msgstr "You cannot disable yourself."
+
+#: views.py
+msgid "启用"
+msgstr "Enabled"
+
+#: views.py
+msgid "禁用"
+msgstr "Disabled"
+
+#: views.py
+msgid "用户 %(username)s 已%(status)s。"
+msgstr "User %(username)s has been %(status)s."
+
+#: views.py
+msgid "新增领料原因"
+msgstr "New Pick Reason"
+
+#: views.py
+msgid "领料原因 \"%(label)s\" 创建成功。"
+msgstr "Pick reason \"%(label)s\" created successfully."
+
+#: views.py
+msgid "编辑领料原因 - %(label)s"
+msgstr "Edit Pick Reason - %(label)s"
+
+#: views.py
+msgid "领料原因 \"%(label)s\" 已更新。"
+msgstr "Pick reason \"%(label)s\" has been updated."
+
+#: views.py
+msgid "领料原因 \"%(label)s\" 已被出库单使用，无法删除。请先将其设为禁用。"
+msgstr "Pick reason \"%(label)s\" is in use and cannot be deleted. Please deactivate it first."
+
+#: views.py
+msgid "领料原因 \"%(label)s\" 已删除。"
+msgstr "Pick reason \"%(label)s\" has been deleted."
+
+#: admin.py
+msgid "手工出库系统"
+msgstr "Manual Outbound System"
+
+#: base.html
+msgid "退出登录"
+msgstr "Logout"
+
+#: base.html
+msgid "出库单列表"
+msgstr "Order List"
+
+#: base.html
+msgid "新增出库单"
+msgstr "New Order"
+
+#: base.html
+msgid "用户管理"
+msgstr "User Management"
+
+#: list.html
+msgid "手工出库单列表"
+msgstr "Manual Outbound Orders"
+
+#: list.html
+msgid "导出 Excel"
+msgstr "Export Excel"
+
+#: list.html
+msgid "搜索单号/部门/领料人/工号..."
+msgstr "Search order no./dept./applicant/ID..."
+
+#: list.html
+msgid "全部（补过账标记）"
+msgstr "All (Posting Flag)"
+
+#: list.html
+msgid "需要补过账"
+msgstr "Needs Posting"
+
+#: list.html
+msgid "无需补过账"
+msgstr "No Posting Needed"
+
+#: list.html
+msgid "全部（关闭状态）"
+msgstr "All (Close Status)"
+
+#: list.html
+msgid "已完全关闭"
+msgstr "All Closed"
+
+#: list.html
+msgid "有未关闭项"
+msgstr "Has Open Items"
+
+#: list.html
+msgid "创建日期（起）"
+msgstr "From Date"
+
+#: list.html
+msgid "创建日期（止）"
+msgstr "To Date"
+
+#: list.html
+msgid "部门"
+msgstr "Department"
+
+#: list.html
+msgid "明细数"
+msgstr "Items"
+
+#: list.html
+msgid "补过账"
+msgstr "Posting"
+
+#: list.html
+msgid "操作"
+msgstr "Actions"
+
+#: list.html
+msgid "需要"
+msgstr "Yes"
+
+#: list.html
+msgid "无需"
+msgstr "No"
+
+#: list.html
+msgid "查看详情"
+msgstr "View Details"
+
+#: list.html
+msgid "作废此出库单（提交后2小时内有效）"
+msgstr "Void this order (within 2 hours of submission)"
+
+#: list.html
+msgid "暂无手工出库记录"
+msgstr "No outbound orders found"
+
+#: list.html
+msgid "首页"
+msgstr "First"
+
+#: list.html
+msgid "上一页"
+msgstr "Prev"
+
+#: list.html
+msgid "下一页"
+msgstr "Next"
+
+#: list.html
+msgid "末页"
+msgstr "Last"
+
+#: form.html
+msgid "返回列表"
+msgstr "Back to List"
+
+#: form.html
+msgid "出库单号："
+msgstr "Order No.:"
+
+#: form.html
+msgid "注意：已有明细项关闭，修改可能影响已关闭的记录。"
+msgstr "Note: Some items are already closed; editing may affect closed records."
+
+#: form.html
+msgid "表头信息"
+msgstr "Header Info"
+
+#: form.html
+msgid "添加一行"
+msgstr "Add Row"
+
+#: form.html
+msgid "保存出库单草稿"
+msgstr "Save Draft"
+
+#: form.html
+msgid "取消"
+msgstr "Cancel"
+
+#: form.html
+msgid "删除此行"
+msgstr "Delete this row"
+
+#: form.html
+msgid "至少需要保留一行明细。"
+msgstr "At least one item row must remain."
+
+#: form.html
+msgid "确定要删除此行吗？"
+msgstr "Are you sure you want to delete this row?"
+
+#: form.html
+msgid "是否保存当前草稿？"
+msgstr "Save current draft?"
+
+#: detail.html
+msgid "出库单详情"
+msgstr "Order Detail"
+
+#: detail.html
+msgid "确定要提交此出库单吗？提交后仅管理员可编辑。"
+msgstr "Submit this order? Only admins can edit after submission."
+
+#: detail.html
+msgid "提交出库单"
+msgstr "Submit Order"
+
+#: detail.html
+msgid "作废"
+msgstr "Void"
+
+#: detail.html
+msgid "编辑出库单"
+msgstr "Edit Order"
+
+#: detail.html
+msgid "编辑"
+msgstr "Edit"
+
+#: detail.html
+msgid "打印出库单"
+msgstr "Print Order"
+
+#: detail.html
+msgid "打印"
+msgstr "Print"
+
+#: detail.html
+msgid "确定要删除出库单"
+msgstr "Delete order"
+
+#: detail.html
+msgid "吗？此操作不可恢复。"
+msgstr "? This action cannot be undone."
+
+#: detail.html
+msgid "删除"
+msgstr "Delete"
+
+#: detail.html
+msgid "返回列表"
+msgstr "Back to List"
+
+#: detail.html
+msgid "基本信息"
+msgstr "Basic Info"
+
+#: detail.html
+msgid "出库单号"
+msgstr "Order No."
+
+#: detail.html
+msgid "领料部门"
+msgstr "Department"
+
+#: detail.html
+msgid "领料人"
+msgstr "Applicant"
+
+#: detail.html
+msgid "工号"
+msgstr "Employee ID"
+
+#: detail.html
+msgid "联系电话"
+msgstr "Phone"
+
+#: detail.html
+msgid "创建时间"
+msgstr "Created At"
+
+#: detail.html
+msgid "创建人"
+msgstr "Created By"
+
+#: detail.html
+msgid "是否需要系统补过账"
+msgstr "Needs System Posting"
+
+#: detail.html
+msgid "不需要"
+msgstr "No"
+
+#: detail.html
+msgid "需要"
+msgstr "Yes"
+
+#: detail.html
+msgid "备注说明"
+msgstr "Remark"
+
+#: detail.html
+msgid "未完成审批的系统领料申请单号"
+msgstr "Pending System Order Nos."
+
+#: detail.html
+msgid "作废信息"
+msgstr "Void Info"
+
+#: detail.html
+msgid "在 <strong>%(vt)s</strong> 作废此单，原因是：<strong>%(vr)s</strong>"
+msgstr "Voided at <strong>%(vt)s</strong>, reason: <strong>%(vr)s</strong>"
+
+#: detail.html
+msgid "共"
+msgstr "Total"
+
+#: detail.html
+msgid "项"
+msgstr "items"
+
+#: detail.html
+msgid "物料编码"
+msgstr "Material Code"
+
+#: detail.html
+msgid "物料描述"
+msgstr "Material Name"
+
+#: detail.html
+msgid "规格"
+msgstr "Specification"
+
+#: detail.html
+msgid "数量"
+msgstr "Quantity"
+
+#: detail.html
+msgid "单位"
+msgstr "Unit"
+
+#: detail.html
+msgid "存货库位"
+msgstr "Storage Location"
+
+#: detail.html
+msgid "备注"
+msgstr "Remark"
+
+#: detail.html
+msgid "补录单号"
+msgstr "System No."
+
+#: detail.html
+msgid "操作"
+msgstr "Actions"
+
+#: detail.html
+msgid "无明细记录"
+msgstr "No item records"
+
+#: detail.html
+msgid "关闭明细项"
+msgstr "Close Item"
+
+#: detail.html
+msgid "数量:"
+msgstr "Qty:"
+
+#: detail.html
+msgid "关闭方式"
+msgstr "Close Method"
+
+#: detail.html
+msgid "手动关闭（无需补过账）"
+msgstr "Manual close (no posting needed)"
+
+#: detail.html
+msgid "系统出库单号"
+msgstr "System Order No."
+
+#: detail.html
+msgid "关闭原因"
+msgstr "Close Reason"
+
+#: detail.html
+msgid "手动关闭时，请填写关闭原因"
+msgstr "Please enter the close reason for manual close"
+
+#: detail.html
+msgid "确认关闭"
+msgstr "Confirm Close"
+
+#: print.html
+msgid "打印出库单"
+msgstr "Print Order"
+
+#: print.html
+msgid "打印预览"
+msgstr "Print Preview"
+
+#: print.html
+msgid "打印"
+msgstr "Print"
+
+#: print.html
+msgid "返回详情"
+msgstr "Back to Detail"
+
+#: print.html
+msgid "打印日期："
+msgstr "Print Date: "
+
+#: print.html
+msgid "出库单号："
+msgstr "Order No.:"
+
+#: print.html
+msgid "单据状态："
+msgstr "Status:"
+
+#: print.html
+msgid "领料部门："
+msgstr "Department:"
+
+#: print.html
+msgid "领料人："
+msgstr "Applicant:"
+
+#: print.html
+msgid "工号："
+msgstr "Employee ID:"
+
+#: print.html
+msgid "联系电话："
+msgstr "Phone:"
+
+#: print.html
+msgid "是否补过账："
+msgstr "Needs Posting:"
+
+#: print.html
+msgid "不需要"
+msgstr "No"
+
+#: print.html
+msgid "创建人："
+msgstr "Created By:"
+
+#: print.html
+msgid "手工领料的原因："
+msgstr "Pick Reason:"
+
+#: print.html
+msgid "备注说明："
+msgstr "Remark:"
+
+#: print.html
+msgid "未完成审批的系统领料申请单号："
+msgstr "Pending System Order Nos.:"
+
+#: print.html
+msgid "序号"
+msgstr "No."
+
+#: print.html
+msgid "物料编码"
+msgstr "Material Code"
+
+#: print.html
+msgid "物料描述"
+msgstr "Material Name"
+
+#: print.html
+msgid "规格"
+msgstr "Specification"
+
+#: print.html
+msgid "数量"
+msgstr "Quantity"
+
+#: print.html
+msgid "单位"
+msgstr "Unit"
+
+#: print.html
+msgid "存货库位"
+msgstr "Storage Location"
+
+#: print.html
+msgid "备注"
+msgstr "Remark"
+
+#: print.html
+msgid "领料人签字："
+msgstr "Applicant Signature:"
+
+#: print.html
+msgid "日期：________年____月____日"
+msgstr "Date: ________/____/____"
+
+#: print.html
+msgid "仓管员签字："
+msgstr "Warehouseman Signature:"
+
+#: print.html
+msgid "部门主管签字："
+msgstr "Dept. Supervisor Signature:"
+
+#: print.html
+msgid "创建时间："
+msgstr "Created At:"
+
+#: void_confirm.html
+msgid "确认要作废出库单 <strong>%(on)s</strong> 吗？此操作不可撤销。"
+msgstr "Void order <strong>%(on)s</strong>? This action cannot be undone."
+
+#: void_confirm.html
+msgid "提交时间"
+msgstr "Submitted At"
+
+#: void_confirm.html
+msgid "确定作废此出库单吗？此操作不可恢复。"
+msgstr "Confirm void this order? This action cannot be undone."
+
+#: void_confirm.html
+msgid "确认作废"
+msgstr "Confirm Void"
+
+#: void_confirm.html
+msgid "取消"
+msgstr "Cancel"
+
+#: user_list.html
+msgid "用户管理"
+msgstr "User Management"
+
+#: user_list.html
+msgid "新增用户"
+msgstr "New User"
+
+#: user_list.html
+msgid "用户名"
+msgstr "Username"
+
+#: user_list.html
+msgid "员工名"
+msgstr "Full Name"
+
+#: user_list.html
+msgid "邮箱"
+msgstr "Email"
+
+#: user_list.html
+msgid "超级用户"
+msgstr "Superuser"
+
+#: user_list.html
+msgid "活跃状态"
+msgstr "Status"
+
+#: user_list.html
+msgid "最后登录"
+msgstr "Last Login"
+
+#: user_list.html
+msgid "操作"
+msgstr "Actions"
+
+#: user_list.html
+msgid "是"
+msgstr "Yes"
+
+#: user_list.html
+msgid "否"
+msgstr "No"
+
+#: user_list.html
+msgid "活跃"
+msgstr "Active"
+
+#: user_list.html
+msgid "禁用"
+msgstr "Disabled"
+
+#: user_list.html
+msgid "重置密码"
+msgstr "Reset Password"
+
+#: user_list.html
+msgid "禁用用户"
+msgstr "Disable User"
+
+#: user_list.html
+msgid "确定要禁用用户"
+msgstr "Disable user"
+
+#: user_list.html
+msgid "吗？"
+msgstr "?"
+
+#: user_list.html
+msgid "启用用户"
+msgstr "Enable User"
+
+#: user_list.html
+msgid "启用"
+msgstr "Enable"
+
+#: user_list.html
+msgid "暂无用户"
+msgstr "No users found"
+
+#: user_form.html
+msgid "返回用户列表"
+msgstr "Back to User List"
+
+#: user_form.html
+msgid "保存"
+msgstr "Save"
+
+#: user_form.html
+msgid "取消"
+msgstr "Cancel"
+
+#: reason_list.html
+msgid "新增原因"
+msgstr "New Reason"
+
+#: reason_list.html
+msgid "排序"
+msgstr "Sort"
+
+#: reason_list.html
+msgid "名称"
+msgstr "Name"
+
+#: reason_list.html
+msgid "状态"
+msgstr "Status"
+
+#: reason_list.html
+msgid "操作"
+msgstr "Actions"
+
+#: reason_list.html
+msgid "编辑"
+msgstr "Edit"
+
+#: reason_list.html
+msgid "确定要删除领料原因"
+msgstr "Delete pick reason"
+
+#: reason_list.html
+msgid "删除"
+msgstr "Delete"
+
+#: reason_list.html
+msgid "暂无领料原因数据"
+msgstr "No pick reasons found"
+
+#: reason_form.html
+msgid "返回列表"
+msgstr "Back to List"
+
+#: reason_form.html
+msgid "唯一标识，创建后不可修改"
+msgstr "Unique identifier, cannot be changed after creation"
+
+#: reason_form.html
+msgid "数字越小越靠前"
+msgstr "Smaller numbers appear first"
+
+#: reason_form.html
+msgid "保存"
+msgstr "Save"
+
+#: reason_form.html
+msgid "取消"
+msgstr "Cancel"
