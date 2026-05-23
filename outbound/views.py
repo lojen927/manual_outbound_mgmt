@@ -457,12 +457,13 @@ class UserCreateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'is_superuser', 'is_active']
+        fields = ['username', 'email', 'first_name', 'is_superuser', 'is_staff', 'is_active']
         labels = {
             'username': _('用户名'),
             'email': _('邮箱'),
             'first_name': _('姓名'),
             'is_superuser': _('超级用户'),
+            'is_staff': _('工作人员权限'),
             'is_active': _('活跃'),
         }
         widgets = {
@@ -470,6 +471,7 @@ class UserCreateForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'is_superuser': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'is_staff': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 

@@ -552,6 +552,10 @@ msgid "超级用户"
 msgstr "Superuser"
 
 #: views.py
+msgid "工作人员权限"
+msgstr "Staff status"
+
+#: views.py
 msgid "活跃"
 msgstr "Active"
 
