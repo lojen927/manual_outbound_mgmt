@@ -25,50 +25,50 @@
 
         <!-- Header -->
         <div style="text-align: center; margin-bottom: 24px;">
-            <h3 style="margin-bottom: 4px; font-weight: 600;">{% trans "手工出库单" %}</h3>
-            <div style="color: #666; font-size: 13px;">{% trans "打印日期：" %}{% now "Y-m-d H:i" %}</div>
+            <h3 style="margin-bottom: 4px; font-weight: 600;">手工出库单 / Manual Outbound Order</h3>
+            <div style="color: #666; font-size: 13px;">打印日期 / Print Date：{% now "Y-m-d H:i" %}</div>
         </div>
 
         <!-- Order info -->
         <table style="width:100%; border-collapse: collapse; margin-bottom: 16px; font-size: 14px;">
             <tr>
-                <td style="padding: 4px 8px; width: 50%;"><strong>{% trans "出库单号：" %}</strong>{{ object.order_no }}</td>
-                <td style="padding: 4px 8px; width: 25%;"><strong>{% trans "单据状态：" %}</strong>
-                    {% if object.status == 'draft' %}{% trans "草稿" %}{% else %}{% trans "已提交" %}{% endif %}
+                <td style="padding: 4px 8px; width: 50%;"><strong>出库单号 / Order No.：</strong>{{ object.order_no }}</td>
+                <td style="padding: 4px 8px; width: 25%;"><strong>单据状态 / Status：</strong>
+                    {% if object.status == 'draft' %}草稿 / Draft{% else %}已提交 / Submitted{% endif %}
                 </td>
-                <td style="padding: 4px 8px; width: 25%;"><strong>{% trans "创建时间：" %}</strong>{{ object.created_at|date:"Y-m-d H:i" }}</td>
+                <td style="padding: 4px 8px; width: 25%;"><strong>创建时间 / Created：</strong>{{ object.created_at|date:"Y-m-d H:i" }}</td>
             </tr>
             <tr>
-                <td style="padding: 4px 8px;"><strong>{% trans "领料部门：" %}</strong>{{ object.department }}</td>
-                <td style="padding: 4px 8px;"><strong>{% trans "领料人：" %}</strong>{{ object.applicant }}</td>
-                <td style="padding: 4px 8px;"><strong>{% trans "工号：" %}</strong>{{ object.employee_id }}</td>
+                <td style="padding: 4px 8px;"><strong>领料部门 / Dept.：</strong>{{ object.department }}</td>
+                <td style="padding: 4px 8px;"><strong>领料人 / Applicant：</strong>{{ object.applicant }}</td>
+                <td style="padding: 4px 8px;"><strong>工号 / Emp. ID：</strong>{{ object.employee_id }}</td>
             </tr>
             <tr>
-                <td style="padding: 4px 8px;"><strong>{% trans "联系电话：" %}</strong>{{ object.phone|default:"-" }}</td>
+                <td style="padding: 4px 8px;"><strong>联系电话 / Phone：</strong>{{ object.phone|default:"-" }}</td>
                 <td style="padding: 4px 8px;">
-                    <strong>{% trans "是否补过账：" %}</strong>
-                    {% if object.needs_system_posting %}{% trans "需要" %}{% else %}{% trans "不需要" %}{% endif %}
+                    <strong>补过账 / Sys. Posting：</strong>
+                    {% if object.needs_system_posting %}需要 / Yes{% else %}不需要 / No{% endif %}
                 </td>
-                <td style="padding: 4px 8px;"><strong>{% trans "创建人：" %}</strong>{{ object.created_by.username }}</td>
+                <td style="padding: 4px 8px;"><strong>创建人 / Created by：</strong>{{ object.created_by.username }}</td>
             </tr>
             {% if object.reason %}
             <tr>
                 <td colspan="3" style="padding: 4px 8px;">
-                    <strong>{% trans "手工领料的原因：" %}</strong>{{ object.reason_label }}
+                    <strong>领料原因 / Reason：</strong>{{ object.reason_label }}
                 </td>
             </tr>
             {% endif %}
             {% if object.remark %}
             <tr>
                 <td colspan="3" style="padding: 4px 8px;">
-                    <strong>{% trans "备注说明：" %}</strong>{{ object.remark }}
+                    <strong>备注说明 / Remark：</strong>{{ object.remark }}
                 </td>
             </tr>
             {% endif %}
             {% if object.pending_order_numbers %}
             <tr>
                 <td colspan="3" style="padding: 4px 8px;">
-                    <strong>{% trans "未完成审批的系统领料申请单号：" %}</strong>{{ object.pending_order_numbers|linebreaksbr }}
+                    <strong>未完成审批的系统领料单号 / Pending Order No(s).：</strong>{{ object.pending_order_numbers|linebreaksbr }}
                 </td>
             </tr>
             {% endif %}
@@ -78,14 +78,14 @@
         <table style="width:100%; border-collapse: collapse; font-size: 13px;" border="1">
             <thead>
                 <tr style="background: #f0f0f0;">
-                    <th style="padding: 6px 8px; text-align: center; width: 40px;">{% trans "序号" %}</th>
-                    <th style="padding: 6px 8px; text-align: center;">{% trans "物料编码" %}</th>
-                    <th style="padding: 6px 8px; text-align: center;">{% trans "物料描述" %}</th>
-                    <th style="padding: 6px 8px; text-align: center;">{% trans "规格" %}</th>
-                    <th style="padding: 6px 8px; text-align: center; width: 70px;">{% trans "数量" %}</th>
-                    <th style="padding: 6px 8px; text-align: center; width: 50px;">{% trans "单位" %}</th>
-                    <th style="padding: 6px 8px; text-align: center; width: 80px;">{% trans "存货库位" %}</th>
-                    <th style="padding: 6px 8px; text-align: center;">{% trans "备注" %}</th>
+                    <th style="padding: 6px 8px; text-align: center; width: 40px;">序号<br>No.</th>
+                    <th style="padding: 6px 8px; text-align: center;">物料编码<br>Material Code</th>
+                    <th style="padding: 6px 8px; text-align: center;">物料描述<br>Description</th>
+                    <th style="padding: 6px 8px; text-align: center;">规格<br>Spec.</th>
+                    <th style="padding: 6px 8px; text-align: center; width: 70px;">数量<br>Qty</th>
+                    <th style="padding: 6px 8px; text-align: center; width: 50px;">单位<br>Unit</th>
+                    <th style="padding: 6px 8px; text-align: center; width: 80px;">存货库位<br>Location</th>
+                    <th style="padding: 6px 8px; text-align: center;">备注<br>Remark</th>
                 </tr>
             </thead>
             <tbody>
@@ -107,16 +107,16 @@
         <!-- Signature area -->
         <div style="margin-top: 50px; display: flex; justify-content: space-between; font-size: 14px;">
             <div style="text-align: center; min-width: 180px;">
-                <div style="margin-bottom: 50px;">{% trans "领料人签字：" %}</div>
-                <div>{% trans "日期：________年____月____日" %}</div>
+                <div style="margin-bottom: 50px;">领料人签字 / Applicant Sign：</div>
+                <div>日期 / Date：________年/Year____月/Month____日/Day____</div>
             </div>
             <div style="text-align: center; min-width: 180px;">
-                <div style="margin-bottom: 50px;">{% trans "仓管员签字：" %}</div>
-                <div>{% trans "日期：________年____月____日" %}</div>
+                <div style="margin-bottom: 50px;">仓管员签字 / Storekeeper Sign：</div>
+                <div>日期 / Date：________年/Year____月/Month____日/Day____</div>
             </div>
             <div style="text-align: center; min-width: 180px;">
-                <div style="margin-bottom: 50px;">{% trans "部门主管签字：" %}</div>
-                <div>{% trans "日期：________年____月____日" %}</div>
+                <div style="margin-bottom: 50px;">部门主管签字 / Dept. Head Sign：</div>
+                <div>日期 / Date：________年/Year____月/Month____日/Day____</div>
             </div>
         </div>
     </div>
