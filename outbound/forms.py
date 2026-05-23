@@ -27,7 +27,7 @@ class ManualOutboundOrderForm(forms.ModelForm):
             'employee_id': _('工号'),
             'phone': _('联系电话'),
             'needs_system_posting': _('后续是否需要系统补过账'),
-            'pending_order_numbers': _('未完成审批的系统领料申请单号'),
+            'pending_order_numbers': _('领料单号'),
         }
         widgets = {
             'department': forms.TextInput(attrs={'class': 'form-control', 'autocomplete': 'off'}),

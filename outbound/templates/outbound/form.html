@@ -151,6 +151,9 @@
             <div class="mt-4">
                 <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg"></i> {% trans "保存出库单草稿" %}</button>
                 <a href="{% if object %}{% url 'outbound_detail' object.pk %}{% else %}{% url 'outbound_list' %}{% endif %}" class="btn btn-outline-secondary">{% trans "取消" %}</a>
+                {% if not object %}
+                <button type="button" class="btn btn-outline-danger" id="clear-all"><i class="bi bi-eraser"></i> {% trans "清空" %}</button>
+                {% endif %}
             </div>
         </form>
     </div>
@@ -424,6 +427,41 @@ document.addEventListener('DOMContentLoaded', function() {
     var _isSubmitting = false;
     form.addEventListener('submit', function() {
         _isSubmitting = true;
+        sessionStorage.removeItem(DRAFT_KEY);
+    });
+
+    // Clear all button
+    document.getElementById('clear-all').addEventListener('click', function() {
+        if (!confirm('{% trans "确定要清空所有内容吗？" %}')) return;
+
+        // Clear header fields
+        form.querySelectorAll('input[type="text"], input[type="tel"], textarea').forEach(function(el) {
+            if (el.name && el.name.match(/^(department|applicant|employee_id|phone|remark|pending_order_numbers)/)) {
+                el.value = '';
+            }
+        });
+        // Reset reason select to first option
+        var reason = document.getElementById('id_reason');
+        if (reason && reason.options.length > 0) reason.selectedIndex = 0;
+        // Reset radio to default (true/需要)
+        var trueRadio = document.querySelector('input[name="needs_system_posting"][value="true"]');
+        if (trueRadio) trueRadio.checked = true;
+
+        // Remove all item rows except first, clear first
+        var rows = tbody.querySelectorAll('.item-row');
+        for (var i = rows.length - 1; i >= 1; i--) { rows[i].remove(); }
+        if (rows[0]) {
+            rows[0].querySelectorAll('input, select, textarea').forEach(function(el) {
+                if (el.type !== 'hidden' && !el.name.endsWith('-DELETE')) el.value = '';
+                if (el.name.endsWith('-DELETE')) el.checked = false;
+                el.classList.remove('is-valid', 'is-invalid');
+            });
+            rows[0].querySelectorAll('.text-danger').forEach(function(el) { el.remove(); });
+        }
+        totalForms.value = 1;
+        reindexRows();
+
+        // Clear draft
         sessionStorage.removeItem(DRAFT_KEY);
     });
     {% endif %}

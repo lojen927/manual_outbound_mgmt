@@ -132,10 +132,6 @@ msgid "是否需要系统补过账"
 msgstr "Needs System Posting"
 
 #: models.py
-msgid "未完成审批的系统领料申请单号"
-msgstr "Pending System Order Nos."
-
-#: models.py
 msgid "如有多个单号，请用换行分隔"
 msgstr "Separate multiple numbers with newlines"
 
@@ -238,10 +234,6 @@ msgstr "Phone"
 #: forms.py
 msgid "后续是否需要系统补过账"
 msgstr "Needs system posting?"
-
-#: forms.py
-msgid "未完成审批的系统领料申请单号"
-msgstr "Pending system order nos."
 
 #: forms.py
 msgid "是"
@@ -884,10 +876,6 @@ msgid "备注说明"
 msgstr "Remark"
 
 #: detail.html
-msgid "未完成审批的系统领料申请单号"
-msgstr "Pending System Order Nos."
-
-#: detail.html
 msgid "作废信息"
 msgstr "Void Info"
 
@@ -1038,10 +1026,6 @@ msgstr "Pick Reason:"
 #: print.html
 msgid "备注说明："
 msgstr "Remark:"
-
-#: print.html
-msgid "未完成审批的系统领料申请单号："
-msgstr "Pending System Order Nos.:"
 
 #: print.html
 msgid "序号"
@@ -1286,3 +1270,15 @@ msgstr "Confirm Delete"
 #: user_delete_confirm.html
 msgid "确定删除此用户吗？此操作不可恢复。"
 msgstr "Are you sure you want to delete this user? This action cannot be undone."
+
+#: forms.py, detail.html
+msgid "领料单号"
+msgstr "Order No(s)."
+
+#: form.html
+msgid "清空"
+msgstr "Clear All"
+
+#: form.html
+msgid "确定要清空所有内容吗？"
+msgstr "Are you sure you want to clear all content?"
